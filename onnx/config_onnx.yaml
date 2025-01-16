@@ -1,0 +1,21 @@
+sample_rate: 8000
+out_channels: 256
+
+real_att: !new:models.local.TFgridnet.TF_gridnet_attentionblock
+    emb_dim: 128
+    n_freqs: 65
+    n_head: 4
+    approx_qk_dim: 512
+
+MaskNet: !new:models.model_USEF_TFGridNet_onnx.Tar_Model
+    real_att: !ref <real_att>
+    n_freqs: 65
+    hidden_channels: 256
+    n_head: 4
+    emb_dim: 128
+    emb_ks: 1
+    emb_hs: 1
+    num_layers: 6
+
+modules:
+    masknet: !ref <MaskNet>
